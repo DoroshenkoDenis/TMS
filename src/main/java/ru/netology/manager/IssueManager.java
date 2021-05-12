@@ -61,10 +61,10 @@ public class IssueManager {
     }
 
     //  фильтрация по Label
-    public List<Issue> filterByLabel(Label label) {
+    public List<Issue> filterByLabel(String prefix) {
         List<Issue> temp = new ArrayList<>();
         for (Issue issue : getAll()) {
-            if (issue.getLabel().equals(label)) {
+            if (issue.getLabel().equals(prefix)) {
                 temp.add(issue);
             }
         }
