@@ -26,17 +26,13 @@ public class IssueManager {
     // закрытие Issue по id
     public void closeIssue(int id) {
         Issue issue = repository.findById(id);
-        repository.removeById(id);
         issue.setStatusOpen(false);
-        repository.save(issue);
     }
 
     // открытие Issue по id
     public void openIssue(int id) {
         Issue issue = repository.findById(id);
-        repository.removeById(id);
         issue.setStatusOpen(true);
-        repository.save(issue);
     }
 
     // создание списка открытых Issue
@@ -61,15 +57,15 @@ public class IssueManager {
         return closedIssue;
     }
 
-    // фильтрация по лэйблу
-    public List<Issue> filterByLabelType(Predicate<String> prefix) {
-        List<Issue> filteredByLabel = new ArrayList<>();
-        for (Issue issue : getAll()) {
-            if (prefix.test(issue.getLabel().getPrefix())) {
-                filteredByLabel.add(issue);
-            }
-        }
-        return filteredByLabel;
-    }
+//    // фильтрация по Label
+//    public List<Issue> filterByLabelType(Predicate<String> prefix) {
+//        List<Issue> filteredByLabel = new ArrayList<>();
+//        for (Issue issue : getAll()) {
+//            if (prefix.test(issue.getLabel().)) {
+//                filteredByLabel.add(issue);
+//            }
+//        }
+//        return filteredByLabel;
+//    }
 }
 //   TODO SORT

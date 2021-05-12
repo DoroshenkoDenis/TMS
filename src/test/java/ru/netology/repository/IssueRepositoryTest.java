@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class IssueRepositoryTest {
     private IssueRepository repository = new IssueRepository();
     private List<Issue> issues = new ArrayList<>();
-    private Set<Label> labelSet = new HashSet<>();
 
     private User user1 = new User(1, "Doroshenko", true);
     private User user2 = new User(2, "Ivanov", false);
@@ -29,16 +28,22 @@ class IssueRepositoryTest {
     private Label label4 = new Label(4, "status", "waiting-for-feedback", "#FAEBD7");
     private Label label5 = new Label(5, "type", "question", "#8DB600");
 
-    private Issue issue1 = new Issue(1, "issue1", user1, user5, true, label1);
-    private Issue issue2 = new Issue(2, "issue2", user2, null, false, label2);
-    private Issue issue3 = new Issue(3, "issue3", user3, user3, true, label3);
-    private Issue issue4 = new Issue(4, "issue4", user4, user1, false, label4);
-    private Issue issue5 = new Issue(5, "issue5", user5, null, true, label5);
-    private Issue issue6 = new Issue(6, "issue6", user6, null, true, label2);
+    private Set<Label> labelSet1 = new HashSet<>(List.of(label1,label5,label3));
+    private Set<Label> labelSet2 = new HashSet<>(List.of(label2,label4));
+    private Set<Label> labelSet3 = new HashSet<>(List.of(label3,label1));
+    private Set<Label> labelSet4 = new HashSet<>(List.of(label4,label5));
+    private Set<Label> labelSet5 = new HashSet<>(List.of(label5));
+    private Set<Label> labelSet6 = new HashSet<>(List.of(label1,label2));
+
+    private Issue issue1 = new Issue(1, "issue1", user1, user5, true, labelSet1);
+    private Issue issue2 = new Issue(2, "issue2", user2, null, false, labelSet2);
+    private Issue issue3 = new Issue(3, "issue3", user3, user3, true, labelSet3);
+    private Issue issue4 = new Issue(4, "issue4", user4, user1, false, labelSet4);
+    private Issue issue5 = new Issue(5, "issue5", user5, null, true, labelSet5);
+    private Issue issue6 = new Issue(6, "issue5", user6, null, true, labelSet6);
 
     @BeforeEach
     public void setUpIssues() {
-        labelSet.addAll(List.of(label1, label2, label3, label4, label5));
         issues.addAll(List.of(issue1, issue2, issue3, issue4, issue5));
         repository.save(issue1);
         repository.save(issue2);

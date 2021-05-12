@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,8 +18,7 @@ public class Issue {
     private User author;
     private User assignee;
     private boolean statusOpen = true;
-    private Label label;
-
+    private Set<Label> label;
 
 //    private Date createDate;
 //    private Date updateDate;
