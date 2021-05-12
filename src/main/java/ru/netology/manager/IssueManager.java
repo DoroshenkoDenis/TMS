@@ -2,9 +2,12 @@ package ru.netology.manager;
 
 import lombok.Data;
 import ru.netology.domain.Issue;
+import ru.netology.domain.Label;
 import ru.netology.repository.IssueRepository;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.Predicate;
 
 @Data
@@ -57,15 +60,27 @@ public class IssueManager {
         return closedIssue;
     }
 
-//    // фильтрация по Label
-//    public List<Issue> filterByLabelType(Predicate<String> prefix) {
-//        List<Issue> filteredByLabel = new ArrayList<>();
-//        for (Issue issue : getAll()) {
-//            if (prefix.test(issue.getLabel().)) {
-//                filteredByLabel.add(issue);
-//            }
-//        }
-//        return filteredByLabel;
-//    }
+    //  фильтрация по Label
+    public List<Issue> filterByLabel(Label label) {
+        List<Issue> temp = new ArrayList<>();
+        for (Issue issue : getAll()) {
+            if (issue.getLabel().equals(label)) {
+                temp.add(issue);
+            }
+        }
+        return temp;
+    }
+
+    // фильтрация по author
+    public List<Issue> filterByAuthor(Predicate<String> name) {
+        List<Issue> filteredByAuthor = new ArrayList<>();
+        for (Issue issue : getAll()) {
+            if (name.test(issue.getAuthor().getName())) {
+                filteredByAuthor.add(issue);
+            }
+        }
+        return filteredByAuthor;
+    }
 }
 //   TODO SORT
+

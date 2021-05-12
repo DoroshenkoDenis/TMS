@@ -39,7 +39,7 @@ class IssueManagerTest {
     private Issue issue2 = new Issue(2, "issue2", user2, null, false, labelSet2);
     private Issue issue3 = new Issue(3, "issue3", user3, user3, true, labelSet3);
     private Issue issue4 = new Issue(4, "issue4", user4, user1, false, labelSet4);
-    private Issue issue5 = new Issue(5, "issue5", user5, null, true, labelSet5);
+    private Issue issue5 = new Issue(5, "issue5", user3, null, true, labelSet5);
     private Issue issue6 = new Issue(6, "issue5", user6, null, true, labelSet6);
 
     @BeforeEach
@@ -104,11 +104,19 @@ class IssueManagerTest {
         assertEquals(expected, actual);
     }
 
-//    @Test
-//    void filterByLabel() {
-//        List<Issue> actual = manager.filterByLabelType(labelSet -> labelSet.equals("type"));
+    @Test
+    void filterByLabel() {
+
+//        List<Issue> actual = manager.filterByLabelType(labelSet1);
 //        List<Issue> expected = List.of(issue1, issue5);
 //        assertEquals(expected, actual);
-//    }
+    }
+
+    @Test
+    void filterByAuthor() {
+        List<Issue> actual = manager.filterByAuthor(labelSet -> labelSet.equals("Smith"));
+        List<Issue> expected = List.of(issue3, issue5);
+        assertEquals(expected, actual);
+    }
 
 }
