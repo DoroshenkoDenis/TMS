@@ -2,10 +2,9 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.Issue;
-import ru.netology.domain.Label;
-import ru.netology.domain.User;
+import ru.netology.domain.*;
 import ru.netology.exception.NotFoundException;
+import ru.netology.repository.IssueRepository;
 
 import java.util.*;
 
@@ -14,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class IssueManagerTest {
     private IssueManager manager = new IssueManager();
     private List<Issue> issues = new ArrayList<>();
+    private IssueRepository repository = new IssueRepository();
+    private DateComparator dateComparator = new DateComparator();
 
     private User user1 = new User(1, "Doroshenko", true);
     private User user2 = new User(2, "Ivanov", false);
@@ -39,12 +40,12 @@ class IssueManagerTest {
     private Set<User> AssigneesSet2 = new HashSet<>(List.of(user1, user5));
     private Set<User> AssigneesSet3 = new HashSet<>(List.of(user3, user5));
 
-    private Issue issue1 = new Issue(1, "issue1", user1, AssigneesSet1, true, labelSet1);
-    private Issue issue2 = new Issue(2, "issue2", user2, AssigneesSet2, false, labelSet2);
-    private Issue issue3 = new Issue(3, "issue3", user3, AssigneesSet3, true, labelSet3);
-    private Issue issue4 = new Issue(4, "issue4", user4, AssigneesSet1, false, labelSet4);
-    private Issue issue5 = new Issue(5, "issue5", user3, AssigneesSet2, true, labelSet1);
-    private Issue issue6 = new Issue(6, "issue5", user6, AssigneesSet3, true, labelSet6);
+    private Issue issue1 = new Issue(1, "issue1", user1, AssigneesSet1, true, labelSet1, new GregorianCalendar(2021, Calendar.JANUARY, 11, 1, 12, 23));
+    private Issue issue2 = new Issue(2, "issue2", user2, AssigneesSet2, false, labelSet2, new GregorianCalendar(2018, Calendar.JANUARY, 11, 1, 12, 23));
+    private Issue issue3 = new Issue(3, "issue3", user3, AssigneesSet3, true, labelSet3, new GregorianCalendar(2016, Calendar.FEBRUARY, 23, 4, 34, 55));
+    private Issue issue4 = new Issue(4, "issue4", user4, AssigneesSet1, false, labelSet4, new GregorianCalendar(2019, Calendar.JANUARY, 11, 1, 12, 23));
+    private Issue issue5 = new Issue(5, "issue5", user3, AssigneesSet2, true, labelSet1, new GregorianCalendar(2017, Calendar.JANUARY, 21, 1, 12, 23));
+    private Issue issue6 = new Issue(6, "issue5", user6, AssigneesSet3, true, labelSet6, new GregorianCalendar(2020, Calendar.MARCH, 30, 44, 55, 32));
 
     @BeforeEach
     public void setUpIssues() {
@@ -58,6 +59,12 @@ class IssueManagerTest {
 
     @Test
     void add() {
+        System.out.println(manager.getById(1).getName());
+        System.out.println(manager.getById(1).getCreationDate().getTime());
+        System.out.println(manager.getById(2).getName());
+        System.out.println(manager.getById(2).getCreationDate().getTime());
+
+
         manager.add(issue6);
         int expected = 6;
         int actual = manager.getAll().size();
@@ -68,7 +75,7 @@ class IssueManagerTest {
     void FindAll() {
         List<Issue> expected = issues;
         List<Issue> actual = manager.getAll();
-        assertIterableEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -113,8 +120,6 @@ class IssueManagerTest {
         List<Issue> actual = manager.filterByLabelPrefix(prefix -> prefix.equals("status"));
         List<Issue> expected = List.of(issue2, issue4);
         assertEquals(expected, actual);
-        System.out.println(actual);
-        System.out.println(expected);
     }
 
     @Test
@@ -131,4 +136,28 @@ class IssueManagerTest {
         assertEquals(actual, expected);
     }
 
+    @Test
+    void sortById() {
+        Collection<Issue> actual = manager.sortById();
+        Collection<Issue> expected = List.of(issue1, issue2, issue3, issue4, issue5);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void sortByCreationDate() {
+        DateComparator comparator = new DateComparator();
+        Collection<Issue> actual = manager.sortByCreationDate(comparator);
+        Collection<Issue> expected = List.of(issue3, issue5, issue2, issue4, issue1);
+        assertEquals(expected, actual);
+//        for (Issue item : actual)
+//            System.out.println("Issue ID: " + item.getId() + ", Дата создания Issue: " + item.getCreationDate().getTime());
+    }
+
+    @Test
+    void sortByCreationDateRevers() {
+        DateComparatorRevers comparatorRevers = new DateComparatorRevers();
+        Collection<Issue> actual = manager.sortByCreationDateRevers(comparatorRevers);
+        Collection<Issue> expected = List.of(issue1, issue4, issue2, issue5, issue3);
+        assertEquals(expected, actual);
+    }
 }

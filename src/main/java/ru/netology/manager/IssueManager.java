@@ -1,12 +1,9 @@
 package ru.netology.manager;
 
 import lombok.Data;
-import ru.netology.domain.Issue;
-import ru.netology.domain.Label;
-import ru.netology.domain.User;
+import ru.netology.domain.*;
 import ru.netology.repository.IssueRepository;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.Predicate;
@@ -97,6 +94,28 @@ public class IssueManager {
         }
         return filteredByAssignees;
     }
+
+    // сортировка по ID
+    public List<Issue> sortById() {
+        List<Issue> issues = getAll();
+        Collections.sort(issues);
+        return issues;
+    }
+
+    //    // сортировка по дате создания
+    public List<Issue> sortByCreationDate(DateComparator comparator) {
+        List<Issue> sortList = getAll();
+        sortList.sort(comparator);
+        return sortList;
+    }
+
+    // сортировка по дате создания в обратном порядке
+    public List<Issue> sortByCreationDateRevers(DateComparatorRevers comparator) {
+        List<Issue> sortListRevers = getAll();
+        sortListRevers.sort(comparator);
+        return sortListRevers;
+    }
+
 }
-//   TODO SORT
+
 

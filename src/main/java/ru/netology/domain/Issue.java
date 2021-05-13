@@ -4,22 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Issue {
+public class Issue implements Comparable<Issue> {
     private int id;
     private String name;
     private User author;
     private Set<User> assignees;
     private boolean statusOpen = true;
     private Set<Label> labels;
-
-//    private Date createDate;
-//    private Date updateDate;
+    private Calendar creationDate;
 
     public Issue(String name) {
         this.name = name;
@@ -42,4 +41,8 @@ public class Issue {
         return Objects.hash(name, author, assignees, labels);
     }
 
+    @Override
+    public int compareTo(Issue o) {
+        return id - o.id;
+    }
 }
