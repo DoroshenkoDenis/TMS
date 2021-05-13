@@ -3,6 +3,7 @@ package ru.netology.manager;
 import lombok.Data;
 import ru.netology.domain.Issue;
 import ru.netology.domain.Label;
+import ru.netology.domain.User;
 import ru.netology.repository.IssueRepository;
 
 import java.awt.*;
@@ -52,23 +53,25 @@ public class IssueManager {
     // создание списка закрытых Issue
     public List<Issue> showClosedIssues() {
         List<Issue> closedIssue = new ArrayList<>();
-        for (Issue item : getAll()) {
-            if (!item.isStatusOpen()) {
-                closedIssue.add(item);
+        for (Issue issue : getAll()) {
+            if (!issue.isStatusOpen()) {
+                closedIssue.add(issue);
             }
         }
         return closedIssue;
     }
 
-    //  фильтрация по Label
-    public List<Issue> filterByLabel(String prefix) {
-        List<Issue> temp = new ArrayList<>();
+    //  фильтрация по полю prefix коллекции Set<Label>
+    public List<Issue> filterByLabelPrefix(Predicate<String> prefix) {
+        List<Issue> filteredByLabelPrefix = new ArrayList<>();
         for (Issue issue : getAll()) {
-            if (issue.getLabel().equals(prefix)) {
-                temp.add(issue);
+            for (Label label : issue.getLabels()) {
+                if (prefix.test(label.getPrefix())) {
+                    filteredByLabelPrefix.add(issue);
+                }
             }
         }
-        return temp;
+        return filteredByLabelPrefix;
     }
 
     // фильтрация по author
@@ -80,6 +83,19 @@ public class IssueManager {
             }
         }
         return filteredByAuthor;
+    }
+
+    // фильтрация по assignee
+    public List<Issue> filterByAssignees(Predicate<String> name) {
+        List<Issue> filteredByAssignees = new ArrayList<>();
+        for (Issue issue : getAll()) {
+            for (User assignee : issue.getAssignees()) {
+                if (name.test(assignee.getName())) {
+                    filteredByAssignees.add(issue);
+                }
+            }
+        }
+        return filteredByAssignees;
     }
 }
 //   TODO SORT

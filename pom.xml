@@ -52,16 +52,18 @@
                         </goals>
                         <phase>verify</phase>
                         <configuration>
-<!--                            <excludes>-->
-<!--                                <exclude>**/*Name.class</exclude>-->
-<!--                            </excludes>-->
+                            <excludes>
+                                <exclude>**/*Issue.class</exclude>
+                                <exclude>**/*Label.class</exclude>
+                                <exclude>**/*User.class</exclude>
+                            </excludes>
                             <rules>
                                 <rule>
                                     <limits>
-<!--                                        <limit>-->
-<!--                                            <counter>BRANCH</counter>-->
-<!--                                            <minimum>100%</minimum>-->
-<!--                                        </limit>-->
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <minimum>100%</minimum>
+                                        </limit>
                                     </limits>
                                 </rule>
                             </rules>

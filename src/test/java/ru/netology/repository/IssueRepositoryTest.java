@@ -35,12 +35,16 @@ class IssueRepositoryTest {
     private Set<Label> labelSet5 = new HashSet<>(List.of(label5));
     private Set<Label> labelSet6 = new HashSet<>(List.of(label1,label2));
 
-    private Issue issue1 = new Issue(1, "issue1", user1, user5, true, labelSet1);
-    private Issue issue2 = new Issue(2, "issue2", user2, null, false, labelSet2);
-    private Issue issue3 = new Issue(3, "issue3", user3, user3, true, labelSet3);
-    private Issue issue4 = new Issue(4, "issue4", user4, user1, false, labelSet4);
-    private Issue issue5 = new Issue(5, "issue5", user5, null, true, labelSet5);
-    private Issue issue6 = new Issue(6, "issue5", user6, null, true, labelSet6);
+    private Set<User> AssigneesSet1 = new HashSet<>(List.of(user1, user3));
+    private Set<User> AssigneesSet2 = new HashSet<>(List.of(user1, user5));
+    private Set<User> AssigneesSet3 = new HashSet<>(List.of(user3, user5));
+
+    private Issue issue1 = new Issue(1, "issue1", user1, AssigneesSet1, true, labelSet1);
+    private Issue issue2 = new Issue(2, "issue2", user2, AssigneesSet2, false, labelSet2);
+    private Issue issue3 = new Issue(3, "issue3", user3, AssigneesSet3, true, labelSet3);
+    private Issue issue4 = new Issue(4, "issue4", user4, AssigneesSet1, false, labelSet4);
+    private Issue issue5 = new Issue(5, "issue5", user3, AssigneesSet2, true, labelSet1);
+    private Issue issue6 = new Issue(6, "issue5", user6, AssigneesSet3, true, labelSet6);
 
     @BeforeEach
     public void setUpIssues() {

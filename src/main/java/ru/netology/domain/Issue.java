@@ -14,9 +14,9 @@ public class Issue {
     private int id;
     private String name;
     private User author;
-    private User assignee;
+    private Set<User> assignees;
     private boolean statusOpen = true;
-    private Set<Label> label;
+    private Set<Label> labels;
 
 //    private Date createDate;
 //    private Date updateDate;
@@ -34,12 +34,12 @@ public class Issue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Issue issue = (Issue) o;
-        return name.equals(issue.name) && author.equals(issue.author) && assignee.equals(issue.assignee);
+        return name.equals(issue.name) && author.equals(issue.author) && assignees.equals(issue.assignees) && labels.equals(issue.labels);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, author, assignee);
+        return Objects.hash(name, author, assignees, labels);
     }
 
 }
