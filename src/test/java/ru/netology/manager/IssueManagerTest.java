@@ -59,12 +59,6 @@ class IssueManagerTest {
 
     @Test
     void add() {
-        System.out.println(manager.getById(1).getName());
-        System.out.println(manager.getById(1).getCreationDate().getTime());
-        System.out.println(manager.getById(2).getName());
-        System.out.println(manager.getById(2).getCreationDate().getTime());
-
-
         manager.add(issue6);
         int expected = 6;
         int actual = manager.getAll().size();
